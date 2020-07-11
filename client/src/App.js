@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {
+  Fragment, useEffect
+} from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './App.css';
+import Navbar from './Components/Layout/Navbar'
+import Landing from './Components/Layout/Landing'
+import Register from './Components/Auth/Register'
+import Login from './Components/Auth/Login'
+import { Provider } from 'react-redux'
+import store from './store'
+import Alert from './Components/Layout/Alert'
+import { loadUser } from './actions/register'
 
-function App() {
+const App = () => {
+
+  useEffect(() => {
+    store.dispatch(loadUser())
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Provider store={store}>
+      <Router>
+        <Fragment>
+          <Navbar />
+          <Route exact path='/' component={Landing} />
+          <section className='container'>
+            <Alert />
+            <Switch>
+              <Route exact path='/register' component={Register} />
+              <Route exact path='/login' component={Login} />
+            </Switch>
+          </section>
+        </Fragment>
+      </Router>
+    </Provider>)
 }
-
 export default App;
