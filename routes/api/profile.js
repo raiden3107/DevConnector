@@ -2,6 +2,7 @@ const express = require('express')
 const auth = require('../../middleware/auth')
 const config = require('config')
 const Profile = require('../../models/Profile')
+const Post = require('../../models/Post')
 const {
     check,
     validationResult
@@ -31,7 +32,7 @@ router.get('/me', auth, async (req, res) => {
 })
 
 router.post('/', [auth, [check('status', 'Status is required').not().isEmpty(),
-    check('skills', 'Please provide atleast one skill').not().isEmpty()
+check('skills', 'Please provide atleast one skill').not().isEmpty()
 ]], async (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
@@ -123,6 +124,7 @@ router.get('/user/:user_id', async (req, res) => {
 
 router.delete('/', auth, async (req, res) => {
     try {
+        await Post.deleteMany({ user: req.user.id })
         await Profile.findOneAndRemove({
             user: req.user.id
         })
@@ -137,8 +139,8 @@ router.delete('/', auth, async (req, res) => {
 
 router.put('/experience', [auth,
     [check('title', 'Title is required').not().isEmpty(),
-        check('company', 'Company is required').not().isEmpty(),
-        check('from', 'Starting date is required').not().isEmpty()
+    check('company', 'Company is required').not().isEmpty(),
+    check('from', 'Starting date is required').not().isEmpty()
     ]
 ], async (req, res) => {
     const errors = validationResult(req)
@@ -193,9 +195,9 @@ router.delete('/experience/:exp_id', auth, async (req, res) => {
 
 router.put('/education', [auth,
     [check('school', 'School name is required').not().isEmpty(),
-        check('degree', 'Degree name is required').not().isEmpty(),
-        check('fieldofstudy', 'Field of study is required').not().isEmpty(),
-        check('from', 'Starting date is required').not().isEmpty()
+    check('degree', 'Degree name is required').not().isEmpty(),
+    check('fieldofstudy', 'Field of study is required').not().isEmpty(),
+    check('from', 'Starting date is required').not().isEmpty()
     ]
 ], async (req, res) => {
     const errors = validationResult(req)
