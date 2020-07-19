@@ -2,8 +2,9 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { createProfile } from '../../actions/profile'
 import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { getCurrentUserProfile } from '../../actions/profile'
 
-const EditProfile = ({ profile: { loading, profile }, createProfile, history }) => {
+const EditProfile = ({ profile: { loading, profile }, createProfile, history, getCurrentUserProfile }) => {
 
     const [profileData, setProfileData] = useState({
         company: '',
@@ -38,6 +39,7 @@ const EditProfile = ({ profile: { loading, profile }, createProfile, history }) 
     } = profileData
 
     useEffect(() => {
+        getCurrentUserProfile()
         setProfileData({
             company: loading || !profile.company ? '' : profile.company,
             location: loading || !profile.location ? '' : profile.location,
@@ -176,4 +178,4 @@ const mapStateToProps = state => ({
     profile: state.profile
 })
 
-export default connect(mapStateToProps, { createProfile })(withRouter(EditProfile))
+export default connect(mapStateToProps, { createProfile, getCurrentUserProfile })(withRouter(EditProfile))

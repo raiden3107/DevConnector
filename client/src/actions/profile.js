@@ -1,4 +1,4 @@
-import { GET_PROFILE, PROFILE_ERROR, EXPERIENCE_REMOVED, EDUCATION_REMOVED, ACCOUNT_REMOVED, CLEAR_PROFILE } from './types'
+import { GET_PROFILE, PROFILE_ERROR, EXPERIENCE_REMOVED, EDUCATION_REMOVED, ACCOUNT_REMOVED, CLEAR_PROFILE, GET_PROFILES, GET_GITHUB, GITHUB_ERROR } from './types'
 import axios from 'axios'
 import { setAlert } from '../actions/alert'
 
@@ -179,3 +179,48 @@ export const deleteAccount = () => async dispatch => {
     }
 }
 
+export const getUserProfiles = () => async dispatch => {
+    dispatch({ type: CLEAR_PROFILE })
+    try {
+        const res = await axios.get('/api/profile')
+        dispatch({
+            type: GET_PROFILES,
+            payload: res.data
+        })
+    } catch (error) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: error.response.statusText, status: error.response.status }
+        })
+    }
+}
+
+export const getUserProfileById = userId => async dispatch => {
+    try {
+        const res = await axios.get(`/api/profile/user/${userId}`)
+        dispatch({
+            type: GET_PROFILE,
+            payload: res.data
+        })
+    } catch (error) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: error.response.statusText, status: error.response.status }
+        })
+    }
+}
+
+export const getGithub = username => async dispatch => {
+    try {
+        const res = await axios.get(`/api/profile/github/${username}`)
+        dispatch({
+            type: GET_GITHUB,
+            payload: res.data
+        })
+    } catch (error) {
+        dispatch({
+            type: GITHUB_ERROR,
+            payload: { msg: error.response.statusText, status: error.response.status }
+        })
+    }
+}

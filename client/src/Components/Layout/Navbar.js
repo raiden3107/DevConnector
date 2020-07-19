@@ -1,13 +1,13 @@
 import React, { Fragment } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout } from '../../actions/register'
 
-const Navbar = ({ auth: { loading, isAuthenticated }, logout }) => {
+const Navbar = ({ auth: { loading, isAuthenticated }, logout, history }) => {
 
     const guestLinks = (
         <ul>
-            <li><a href='#!'>Developers</a></li>
+            <li><Link to='/profiles'>Developers</Link></li>
             <li><Link to="/register">Register</Link></li>
             <li><Link to="/login">Login</Link></li>
         </ul>
@@ -15,7 +15,8 @@ const Navbar = ({ auth: { loading, isAuthenticated }, logout }) => {
 
     const authLinks = (
         <ul>
-            <li><a onClick={logout} href="#!"><i className='fas fa-sign-out-alt'>{' '}<span className='hide-sm'>Logout</span></i></a></li>
+            <li><Link to='/profiles'>Developers</Link></li>
+            <li><a onClick={() => logout(history)} href="#!"><i className='fas fa-sign-out-alt'>{' '}<span className='hide-sm'>Logout</span></i></a></li>
             <li><Link to="/dashboard"><i className='fas fa-user'>{' '}<span className='hide-sm'>Dashboard</span></i></Link></li>
         </ul>
     )
@@ -36,4 +37,4 @@ const mapStatetoProps = state => ({
     auth: state.register
 })
 
-export default connect(mapStatetoProps, { logout })(Navbar)
+export default connect(mapStatetoProps, { logout })(withRouter(Navbar))
