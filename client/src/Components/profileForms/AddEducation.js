@@ -49,11 +49,11 @@ const AddEducation = ({ addEducation, history }) => {
                     <input type="text" placeholder="* school" name="school" value={school} onChange={(e) => onChange(e)} required />
                 </div>
                 <div className="form-group">
-                    <input type="text" placeholder="fieldofstudy" name="fieldofstudy" value={fieldofstudy} onChange={(e) => onChange(e)} />
+                    <input type="text" placeholder="* fieldofstudy" name="fieldofstudy" value={fieldofstudy} required onChange={(e) => onChange(e)} />
                 </div>
                 <div className="form-group">
-                    <h4>From Date</h4>
-                    <input type="date" name="from" value={from} onChange={(e) => onChange(e)} />
+                    <h4>* From Date</h4>
+                    <input type="date" name="from" value={from} onChange={(e) => onChange(e)} required />
                 </div>
                 <div className="form-group">
                     <p><input type="checkbox" name="current" value={current} checked={current} onChange={(e) => {

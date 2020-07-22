@@ -148,9 +148,10 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
                 msg: 'Comment does not exist'
             })
         }
-        if (comment.id.toString() !== req.user.id) {
-            return res.status(400).json({
-                msg: 'User not authoriezed'
+        console.log(comment)
+        if (comment.user.toString() !== req.user.id.toString()) {
+            return res.status(401).json({
+                msg: 'User not authoriezed!!!'
             })
         }
         const removeIndex = post.comments.map(comment => comment.id.toString()).indexOf(comment.id)
