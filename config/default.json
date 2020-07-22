@@ -1,5 +1,5 @@
 {
-    "mongoURI": "mongodb+srv://raiden_hasan:nod32antivirus@devconnector-hvkyv.mongodb.net/test",
+    "mongoURI": "mongodb+srv://raiden_hasan:88hsTI2A1xvIjW4D@devconnector-hvkyv.mongodb.net/test",
     "jwtSecret": "raiden_hasan",
     "githubClientId": "54df1165f494107a58e7",
     "githubSecret": "1a2eebba6deedc546df737376de489fd360a5cbc"
